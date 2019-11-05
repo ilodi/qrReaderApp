@@ -13,12 +13,27 @@ class _HomePageState extends State<HomePage> {
   //Aqui van las variables
 
   int currentIndex = 0;
-  
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: Text('Qr'),
+        actions: <Widget>[
+          IconButton(
+            onPressed: () {},
+            icon: Icon(Icons.delete_forever),
+          )
+        ],
+      ),
       body: _callPage(currentIndex),
       bottomNavigationBar: _crearBottomNavigatorBar(),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+      floatingActionButton: FloatingActionButton(
+        child: Icon(Icons.filter_center_focus),
+        backgroundColor: Theme.of(context).primaryColor,
+        onPressed: () {},
+      ),
     );
   }
 
@@ -38,7 +53,7 @@ class _HomePageState extends State<HomePage> {
       currentIndex: currentIndex,
       onTap: (index) {
         setState(() {
-         currentIndex = index; 
+          currentIndex = index;
         });
       },
       items: [

@@ -13,6 +13,10 @@ class MyApp extends StatelessWidget {
       routes: {
         'home': (BuildContext context) => HomePage(),
       },
+      //THEMAS GLOBAL
+      theme: ThemeData(
+        primaryColor: Color.fromRGBO(113, 88, 226,1.0),
+      ),
     );
   }
 }
