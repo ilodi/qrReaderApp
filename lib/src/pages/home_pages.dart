@@ -41,9 +41,10 @@ class _HomePageState extends State<HomePage> {
   }
 
   _scanQR() async {
-    
-    String furueString = '';
-
+//https://www.udemy.com/
+//geo:40.71304393430148,-74.04679670771486
+    String furueString = 'https://www.udemy.com/';
+/* 
     try {
       furueString = await new QRCodeReader().scan();
     } catch (e) {
@@ -54,7 +55,7 @@ class _HomePageState extends State<HomePage> {
 
     if (furueString != null) {
       print('Tenemos algo');
-    }
+    } */
   }
 
   Widget _callPage(int paginaActual) {
