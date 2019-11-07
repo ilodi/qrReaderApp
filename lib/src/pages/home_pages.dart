@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+
+import 'package:qrcode_reader/qrcode_reader.dart';
+
 import 'package:qrreaderapp/src/pages/direciones_page.dart';
 import 'package:qrreaderapp/src/pages/mapas_page.dart';
 
@@ -32,9 +35,26 @@ class _HomePageState extends State<HomePage> {
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.filter_center_focus),
         backgroundColor: Theme.of(context).primaryColor,
-        onPressed: () {},
+        onPressed: _scanQR,
       ),
     );
+  }
+
+  _scanQR() async {
+    
+    String furueString = '';
+
+    try {
+      furueString = await new QRCodeReader().scan();
+    } catch (e) {
+      furueString = e.toString();
+    }
+
+    print('Future: $furueString');
+
+    if (furueString != null) {
+      print('Tenemos algo');
+    }
   }
 
   Widget _callPage(int paginaActual) {
