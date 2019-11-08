@@ -47,7 +47,7 @@ class DBProvider {
 
     final res = await db.rawInsert(
         //El espacio es importante
-         "INSERT Into Scans (id, tipo, valor) "
+        "INSERT Into Scans (id, tipo, valor) "
         "VALUES ( ${nuevoScan.id}, '${nuevoScan.tipo}', '${nuevoScan.valor}' )");
     return res;
   }
@@ -56,7 +56,38 @@ class DBProvider {
   nuevoScan(ScanModel nuevoScan) async {
     final db = await database;
 
-    final res = db.insert('Scans', nuevoScan.toJson());
+    final res = await db.insert('Scans', nuevoScan.toJson());
     return res;
+  }
+
+  //SELECT - OBTENER informacion
+  Future<ScanModel> getScanId(int id) async {
+    final db = await database;
+
+    final res = await db.query('Scans', where: 'id = ?', whereArgs: [id]);
+
+    return res.isNotEmpty ? ScanModel.fromJson(res.first) : null;
+  }
+
+//Traer todos los Scans
+  Future<List<ScanModel>> getTodosScans() async {
+    final db = await database;
+    final res = await db.query('Scans');
+
+//La c es el mapa para iterar
+    List<ScanModel> list =
+        res.isNotEmpty ? res.map((c) => ScanModel.fromJson(c)).toList() : [];
+    return list;
+  }
+
+//GET de todos los scans por el tipo
+  Future<List<ScanModel>> getTodosScansPorTipo(String tipo) async {
+    final db = await database;
+    final res = await db.rawQuery("SELECT * FROM Scans WHERE tipo='$tipo'");
+
+//La c es el mapa para iterar
+    List<ScanModel> list =
+        res.isNotEmpty ? res.map((c) => ScanModel.fromJson(c)).toList() : [];
+    return list;
   }
 }
