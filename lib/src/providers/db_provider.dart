@@ -90,4 +90,14 @@ class DBProvider {
         res.isNotEmpty ? res.map((c) => ScanModel.fromJson(c)).toList() : [];
     return list;
   }
+
+// Actualizar Registros
+  Future<int> updateScan(ScanModel nuevoScan) async {
+    final db = await database;
+//
+    final res = await db.update('Scans', nuevoScan.toJson(),
+        where: 'id = ?', whereArgs: [nuevoScan.id]);
+
+    return res;
+  }
 }
