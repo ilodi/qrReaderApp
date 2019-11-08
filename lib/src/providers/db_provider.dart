@@ -1,10 +1,13 @@
 import 'dart:io';
 
 import 'package:path/path.dart';
-import 'package:qrreaderapp/src/models/scan_model.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:path_provider/path_provider.dart';
 
+//USA EN ESE ARCHIVO import
+import 'package:qrreaderapp/src/models/scan_model.dart';
+//HACE LA IMPORTACION EN TODOS LOS ARCHIVOS DONDE SE LLAME export
+export 'package:qrreaderapp/src/models/scan_model.dart';
 class DBProvider {
   static Database _database;
   static final DBProvider db = DBProvider._();
@@ -108,7 +111,7 @@ class DBProvider {
     return res;
   }
 
-    //Eliminar todo
+  //Eliminar todo
 
   Future<int> delateAll() async {
     final db = await database;

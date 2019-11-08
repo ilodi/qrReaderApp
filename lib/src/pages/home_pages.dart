@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 
-
-
 import 'package:qrreaderapp/src/pages/direciones_page.dart';
 import 'package:qrreaderapp/src/pages/mapas_page.dart';
+import 'package:qrreaderapp/src/providers/db_provider.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key key}) : super(key: key);
@@ -43,7 +42,7 @@ class _HomePageState extends State<HomePage> {
   _scanQR() async {
 //https://www.udemy.com/
 //geo:40.71304393430148,-74.04679670771486
-  //  String furueString = 'https://www.udemy.com/';
+    String furueString = 'https://www.udemy.com/';
 /* 
     try {
       furueString = await new QRCodeReader().scan();
@@ -52,10 +51,12 @@ class _HomePageState extends State<HomePage> {
     }
 
     print('Future: $furueString');
-
+*/
     if (furueString != null) {
-      print('Tenemos algo');
-    } */
+      final scan = ScanModel(valor: furueString);
+      DBProvider.db.nuevoScan(scan);
+      
+    }
   }
 
   Widget _callPage(int paginaActual) {
