@@ -8,6 +8,7 @@ import 'package:path_provider/path_provider.dart';
 import 'package:qrreaderapp/src/models/scan_model.dart';
 //HACE LA IMPORTACION EN TODOS LOS ARCHIVOS DONDE SE LLAME export
 export 'package:qrreaderapp/src/models/scan_model.dart';
+
 class DBProvider {
   static Database _database;
   static final DBProvider db = DBProvider._();

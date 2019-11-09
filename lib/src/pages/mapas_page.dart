@@ -26,9 +26,11 @@ class MapasPage extends StatelessWidget {
           itemBuilder: (context, i) => Dismissible(
             //UniqueKey Crear una llave unica
             key: UniqueKey(),
+
             background: Container(
-              color: Color.fromRGBO(39, 174, 96, 1.0),
+              color: Color.fromRGBO(232, 65, 24,1.0),
             ),
+            //onDismissed metodo al lama al hacr el slder 
             onDismissed: (direction) =>  DBProvider.db.delateScan(scans[i].id),
             child: ListTile(
               leading: Icon(
