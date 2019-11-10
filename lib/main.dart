@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:qrreaderapp/src/pages/home_pages.dart';
+import 'package:qrreaderapp/src/pages/map_page.dart';
 
 void main() => runApp(MyApp());
 
@@ -12,6 +13,8 @@ class MyApp extends StatelessWidget {
       initialRoute: 'home',
       routes: {
         'home': (BuildContext context) => HomePage(),
+        'mapa': (BuildContext context) => MapaPage(),
+
       },
       //THEMAS GLOBAL
       theme: ThemeData(

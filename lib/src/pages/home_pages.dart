@@ -1,9 +1,11 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:qrreaderapp/src/bloc/scans_bloc.dart';
 import 'package:qrreaderapp/src/models/scan_model.dart';
 import 'package:qrreaderapp/src/pages/direciones_page.dart';
 import 'package:qrreaderapp/src/pages/mapas_page.dart';
-
+import 'package:qrreaderapp/src/utils/utils.dart' as utils;
 
 class HomePage extends StatefulWidget {
   const HomePage({Key key}) : super(key: key);
@@ -39,12 +41,12 @@ class _HomePageState extends State<HomePage> {
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.filter_center_focus),
         backgroundColor: Theme.of(context).primaryColor,
-        onPressed: _scanQR,
+        onPressed: () => _scanQR(context),
       ),
     );
   }
 
-  _scanQR() async {
+  _scanQR(BuildContext context) async {
 //https://www.udemy.com/
 //geo:40.71304393430148,-74.04679670771486
     String furueString = 'https://www.udemy.com/';
@@ -61,8 +63,18 @@ class _HomePageState extends State<HomePage> {
       final scan = ScanModel(valor: furueString);
       scansBloc.gregarScan(scan);
 
-       final scan2 = ScanModel(valor: 'geo:40.71304393430148,-74.04679670771486');
+      final scan2 =
+          ScanModel(valor: 'geo:40.71304393430148,-74.04679670771486');
       scansBloc.gregarScan(scan2);
+
+//ESPERAR EN IOS UNA FUNCION
+      if (Platform.isIOS) {
+        Future.delayed(Duration(milliseconds: 750), () {
+          utils.abrirScan(context, scan);
+        });
+      } else {
+        utils.abrirScan(context, scan);
+      }
     }
   }
 
