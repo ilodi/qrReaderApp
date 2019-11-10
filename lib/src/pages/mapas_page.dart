@@ -1,13 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:qrreaderapp/src/bloc/scans_bloc.dart';
 import 'package:qrreaderapp/src/providers/db_provider.dart';
+import 'package:qrreaderapp/src/models/scan_model.dart';
 
 class MapasPage extends StatelessWidget {
-  const MapasPage({Key key}) : super(key: key);
+ 
+final scansBloc = new ScansBloc();
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder(
-      future: DBProvider.db.getTodosScans(),
+    return StreamBuilder<List<ScanModel>>(
+      stream: scansBloc.scansStrams,
       builder: (BuildContext context, AsyncSnapshot<List<ScanModel>> snapshot) {
         if (!snapshot.hasData) {
           return Center(child: CircularProgressIndicator());
@@ -31,7 +34,7 @@ class MapasPage extends StatelessWidget {
               color: Color.fromRGBO(232, 65, 24,1.0),
             ),
             //onDismissed metodo al lama al hacr el slder 
-            onDismissed: (direction) =>  DBProvider.db.delateScan(scans[i].id),
+            onDismissed: (direction) => ScansBloc().borrarScans(scans[i].id),
             child: ListTile(
               leading: Icon(
                 Icons.cloud_queue,

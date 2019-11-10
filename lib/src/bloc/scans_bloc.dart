@@ -39,8 +39,8 @@ class ScansBloc {
     _scansController.sink.add(await DBProvider.db.getTodosScans());
   }
 
-  gregarScan(ScanModel scan) {
-    DBProvider.db.nuevoScan(scan);
+  gregarScan(ScanModel scan) async {
+    await DBProvider.db.nuevoScan(scan);
        //DESPUES DE BORRAR TODOS SE TRAEN LOS QUE SOBRARON
     obtenersScans();
   }

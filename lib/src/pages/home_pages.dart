@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
-
+import 'package:qrreaderapp/src/bloc/scans_bloc.dart';
+import 'package:qrreaderapp/src/models/scan_model.dart';
 import 'package:qrreaderapp/src/pages/direciones_page.dart';
 import 'package:qrreaderapp/src/pages/mapas_page.dart';
-import 'package:qrreaderapp/src/providers/db_provider.dart';
+
 
 class HomePage extends StatefulWidget {
   const HomePage({Key key}) : super(key: key);
@@ -14,6 +15,8 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   //Aqui van las variables
 
+  final scansBloc = new ScansBloc();
+
   int currentIndex = 0;
 
   @override
@@ -23,7 +26,9 @@ class _HomePageState extends State<HomePage> {
         title: Text('Qr'),
         actions: <Widget>[
           IconButton(
-            onPressed: () {},
+            onPressed: () {
+              scansBloc.borrarcanTODOS();
+            },
             icon: Icon(Icons.delete_forever),
           )
         ],
@@ -54,8 +59,10 @@ class _HomePageState extends State<HomePage> {
 */
     if (furueString != null) {
       final scan = ScanModel(valor: furueString);
-      DBProvider.db.nuevoScan(scan);
-      
+      scansBloc.gregarScan(scan);
+
+       final scan2 = ScanModel(valor: 'geo:40.71304393430148,-74.04679670771486');
+      scansBloc.gregarScan(scan2);
     }
   }
 
