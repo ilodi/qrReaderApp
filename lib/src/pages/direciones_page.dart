@@ -1,56 +1,57 @@
 import 'package:flutter/material.dart';
+import 'package:qrreaderapp/src/bloc/scans_bloc.dart';
+import 'package:qrreaderapp/src/providers/db_provider.dart';
+import 'package:qrreaderapp/src/models/scan_model.dart';
+import 'package:qrreaderapp/src/utils/utils.dart' as utils;
 
 class DireccionesPage extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return ListView(
-      children: <Widget>[
-        _itemLista(),
-        _itemLista(),
-        _itemLista(),
-        _itemLista(),
-        _itemLista(),
-        _itemLista(),
-        _itemLista(),
-        _itemLista(),
-        _itemLista(),
-        _itemLista(),
-        _itemLista(),
-      ],
-    );
-  }
+  final scansBloc = new ScansBloc();
 
-  //Listas De elementos
-  Widget _itemLista() {
-    return Container(
-      padding: EdgeInsets.symmetric(vertical: 20.0),
-      color: Color.fromRGBO(44, 44,44, 1.0),
-      child: Dismissible(
-        key: UniqueKey(),
-        background: Container(
-          color:Color.fromRGBO(39, 174, 96,1.0),
-        ),
-        secondaryBackground: Container(
-          color: Color.fromRGBO(231, 76, 60,1.0),
-        ),
-        child: ListTile(
-          leading: CircleAvatar(
-            backgroundColor: Color.fromRGBO(88, 44,44, 1.0),
-            backgroundImage: NetworkImage(
-                'https://i.pinimg.com/originals/e1/dc/76/e1dc769a64a1cc6d044489d9764ae3b9.png'),
+  @override
+
+  //Este Metodo se dispara cada ves que se dibuja este widget
+  Widget build(BuildContext context) {
+    //cargar los registros
+    scansBloc.obtenersScans();
+    return StreamBuilder<List<ScanModel>>(
+      stream: scansBloc.scansStramHttp,
+      builder: (BuildContext context, AsyncSnapshot<List<ScanModel>> snapshot) {
+        if (!snapshot.hasData) {
+          return Center(child: CircularProgressIndicator());
+        }
+
+        final scans = snapshot.data;
+
+        if (scans.length == 0) {
+          return Center(
+            child: Text('No hay info'),
+          );
+        }
+
+        return ListView.builder(
+          itemCount: scans.length,
+          itemBuilder: (context, i) => Dismissible(
+            //UniqueKey Crear una llave unica
+            key: UniqueKey(),
+
+            background: Container(
+              color: Color.fromRGBO(232, 65, 24, 1.0),
+            ),
+            //onDismissed metodo al lama al hacr el slder
+            onDismissed: (direction) => ScansBloc().borrarScans(scans[i].id),
+            child: ListTile(
+              leading: Icon(
+                Icons.cloud_queue,
+                color: Theme.of(context).primaryColor,
+              ),
+              title: Text(scans[i].valor),
+              subtitle: Text('ID: ${scans[i].id}'),
+              trailing: Icon(Icons.keyboard_arrow_right, color: Colors.teal),
+              onTap: () => utils.abrirScan(context,scans[i]),
+            ),
           ),
-          title: Text('Hola Chicos soy FLutter'),
-          subtitle: Text(
-            'soy un sub title, de mi primera app de flutter esto es hermosos como el amor de dios',
-            overflow: TextOverflow.ellipsis,
-          ),
-          trailing: Icon(Icons.keyboard_tab),
-          onTap: () {
-            print('Hola soy tu terminal');
-          },
-          dense: false,
-        ),
-      ),
+        );
+      },
     );
   }
 }

@@ -1,8 +1,10 @@
 import 'dart:async';
 
+import 'package:qrreaderapp/src/bloc/validator.dart';
 import 'package:qrreaderapp/src/providers/db_provider.dart';
 
-class ScansBloc {
+//MIXINS
+class ScansBloc with Validator {
   //patron singleton
 
   static final ScansBloc _singleton = new ScansBloc._internal();
@@ -24,13 +26,14 @@ class ScansBloc {
   final _scansController = StreamController<List<ScanModel>>.broadcast();
 
 //EScuchar data
-  Stream<List<ScanModel>> get scansStrams => _scansController.stream;
+  Stream<List<ScanModel>> get scansStram => _scansController.stream.transform(validarGeo);
+  //streamTransformerts
+  Stream<List<ScanModel>> get scansStramHttp => _scansController.stream.transform(validarHttp);
 
   //CERAR INSTANCIAS CON EL MOTODOS
   dispose() {
     return _scansController?.close();
   }
-
 
 //OBTENER TODOA La Informacion de los SCANS
 
@@ -41,7 +44,7 @@ class ScansBloc {
 
   gregarScan(ScanModel scan) async {
     await DBProvider.db.nuevoScan(scan);
-       //DESPUES DE BORRAR TODOS SE TRAEN LOS QUE SOBRARON
+    //DESPUES DE BORRAR TODOS SE TRAEN LOS QUE SOBRARON
     obtenersScans();
   }
 

@@ -8,9 +8,13 @@ class MapasPage extends StatelessWidget {
   final scansBloc = new ScansBloc();
 
   @override
+
+  //Este Metodo se dispara cada ves que se dibuja este widget
   Widget build(BuildContext context) {
+    //cargar los registros
+    scansBloc.obtenersScans();
     return StreamBuilder<List<ScanModel>>(
-      stream: scansBloc.scansStrams,
+      stream: scansBloc.scansStram,
       builder: (BuildContext context, AsyncSnapshot<List<ScanModel>> snapshot) {
         if (!snapshot.hasData) {
           return Center(child: CircularProgressIndicator());
