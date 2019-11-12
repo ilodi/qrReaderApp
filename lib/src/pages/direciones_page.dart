@@ -41,7 +41,7 @@ class DireccionesPage extends StatelessWidget {
             onDismissed: (direction) => ScansBloc().borrarScans(scans[i].id),
             child: ListTile(
               leading: Icon(
-                Icons.cloud_queue,
+                Icons.web,
                 color: Theme.of(context).primaryColor,
               ),
               title: Text(scans[i].valor),
