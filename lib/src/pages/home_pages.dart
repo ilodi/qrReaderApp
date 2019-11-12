@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:qrcode_reader/qrcode_reader.dart';
 import 'package:qrreaderapp/src/bloc/scans_bloc.dart';
 import 'package:qrreaderapp/src/models/scan_model.dart';
 import 'package:qrreaderapp/src/pages/direciones_page.dart';
@@ -47,10 +48,8 @@ class _HomePageState extends State<HomePage> {
   }
 
   _scanQR(BuildContext context) async {
-//https://www.udemy.com/
-//geo:40.71304393430148,-74.04679670771486
-    String furueString = 'https://www.udemy.com/';
-/* 
+    String furueString;
+
     try {
       furueString = await new QRCodeReader().scan();
     } catch (e) {
@@ -58,14 +57,10 @@ class _HomePageState extends State<HomePage> {
     }
 
     print('Future: $furueString');
-*/
+
     if (furueString != null) {
       final scan = ScanModel(valor: furueString);
       scansBloc.gregarScan(scan);
-
-      final scan2 =
-          ScanModel(valor: 'geo:40.71304393430148,-74.04679670771486');
-      scansBloc.gregarScan(scan2);
 
 //ESPERAR EN IOS UNA FUNCION
       if (Platform.isIOS) {
